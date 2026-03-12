@@ -1,0 +1,260 @@
+{% liquid
+  assign form_id = section.id | prepend: 'HouseDecorQuoteForm-'
+%}
+
+{%- form 'contact', id: form_id, class: 'housedecor-quote-form' -%}
+  {%- if form.errors -%}
+    <div class="housedecor-quote-form__message housedecor-quote-form__message--error" tabindex="-1" autofocus>
+      {{- 'icon-error.svg' | inline_asset_content -}}
+      {{- form.errors.translated_fields.email | capitalize }}
+      {{ form.errors.messages.email -}}
+    </div>
+  {%- endif -%}
+
+  {%- if form.posted_successfully? -%}
+    <div class="housedecor-quote-form__message housedecor-quote-form__message--success" tabindex="-1" autofocus>
+      {{- 'icon-checkmark.svg' | inline_asset_content -}}
+      Gracias, hemos recibido tu solicitud.
+    </div>
+  {%- endif -%}
+
+  <div class="housedecor-quote-form__grid housedecor-quote-form__grid--2">
+    <div class="housedecor-quote-form__field">
+      <label class="paragraph" for="{{ form_id }}-name">Nombre</label>
+      <input
+        id="{{ form_id }}-name"
+        class="housedecor-quote-form__input"
+        type="text"
+        name="contact[Nombre]"
+        value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+      >
+    </div>
+
+    <div class="housedecor-quote-form__field">
+      <label class="paragraph" for="{{ form_id }}-email">
+        Correo
+      </label>
+      <input
+        id="{{ form_id }}-email"
+        class="housedecor-quote-form__input"
+        type="email"
+        name="contact[email]"
+        autocomplete="email"
+        spellcheck="false"
+        autocapitalize="off"
+        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+        aria-required="true"
+        required
+      >
+    </div>
+  </div>
+
+  <div class="housedecor-quote-form__grid housedecor-quote-form__grid--2">
+    <div class="housedecor-quote-form__field">
+      <label class="paragraph" for="{{ form_id }}-subject">Consulta</label>
+      <input
+        id="{{ form_id }}-subject"
+        class="housedecor-quote-form__input"
+        type="text"
+        name="contact[Consulta]"
+        placeholder="Describa su proyecto aquí"
+      >
+    </div>
+
+    <div class="housedecor-quote-form__field">
+      <label class="paragraph" for="{{ form_id }}-phone">Teléfono de contacto</label>
+      <input
+        id="{{ form_id }}-phone"
+        class="housedecor-quote-form__input"
+        type="tel"
+        name="contact[phone]"
+        autocomplete="tel"
+        value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+      >
+    </div>
+  </div>
+
+  <div class="housedecor-quote-form__field">
+    <label class="paragraph" for="{{ form_id }}-type">Tipo de consulta</label>
+    <select id="{{ form_id }}-type" class="housedecor-quote-form__input housedecor-quote-form__select" name="contact[Tipo de consulta]">
+      <option value="">Seleccione una opción</option>
+      <option value="Cotización">Cotización</option>
+      <option value="Diseño personalizado">Diseño personalizado</option>
+      <option value="Postventa">Postventa</option>
+      <option value="Otro">Otro</option>
+    </select>
+  </div>
+
+  <fieldset class="housedecor-quote-form__fieldset">
+    <legend class="paragraph">¿Qué tipo de mueble busca?</legend>
+
+    <div class="housedecor-quote-form__radio-grid">
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Respaldo de cama">
+        <span>Respaldo de cama</span>
+      </label>
+
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Base de cama">
+        <span>Base de cama</span>
+      </label>
+
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Banqueta o puff">
+        <span>Banqueta o puff</span>
+      </label>
+
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Baúl o lateral">
+        <span>Baúl o lateral</span>
+      </label>
+
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Cojines">
+        <span>Cojines</span>
+      </label>
+
+      <label class="housedecor-quote-form__radio">
+        <input type="radio" name="contact[Tipo de mueble]" value="Otro">
+        <span>Otro</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <div class="housedecor-quote-form__field">
+    <label class="paragraph" for="{{ form_id }}-body">Mensaje</label>
+    <textarea
+      id="{{ form_id }}-body"
+      class="housedecor-quote-form__input housedecor-quote-form__textarea"
+      name="contact[body]"
+      rows="5"
+      placeholder="Cuéntenos sobre su proyecto..."
+    >{{- form.body -}}</textarea>
+  </div>
+
+  <label class="housedecor-quote-form__checkbox">
+    <input type="checkbox" name="contact[Acepta privacidad]" value="Sí" required>
+    <span>Acepto los términos de privacidad</span>
+  </label>
+
+  <button type="submit" class="button">
+    Enviar
+  </button>
+{%- endform -%}
+
+{% stylesheet %}
+  .housedecor-quote-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .housedecor-quote-form__grid {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .housedecor-quote-form__grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 750px) {
+    .housedecor-quote-form__grid--2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .housedecor-quote-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xs);
+  }
+
+  .housedecor-quote-form__field label {
+    margin: 0;
+  }
+
+  .housedecor-quote-form__input {
+    width: 100%;
+    color: var(--color-input-text);
+    background-color: var(--color-input-background);
+    border: none;
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.14);
+    border-radius: 0;
+    padding: 1rem 0;
+    box-shadow: none;
+    outline: none;
+  }
+
+  .housedecor-quote-form__input:focus {
+    border-bottom-color: currentColor;
+  }
+
+  .housedecor-quote-form__select {
+    appearance: auto;
+    background-color: transparent;
+  }
+
+  .housedecor-quote-form__textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+
+  .housedecor-quote-form__fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+  }
+
+  .housedecor-quote-form__fieldset legend {
+    margin-bottom: var(--margin-2xs);
+  }
+
+  .housedecor-quote-form__radio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gap-sm) var(--gap-lg);
+  }
+
+  @media screen and (min-width: 750px) {
+    .housedecor-quote-form__radio-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .housedecor-quote-form__radio,
+  .housedecor-quote-form__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+  }
+
+  .housedecor-quote-form__radio span,
+  .housedecor-quote-form__checkbox span {
+    font-family: var(--font-paragraph--family);
+    font-style: var(--font-paragraph--style);
+    font-weight: var(--font-paragraph--weight);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .housedecor-quote-form__radio input,
+  .housedecor-quote-form__checkbox input {
+    margin: 0;
+  }
+
+  .housedecor-quote-form__message {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .housedecor-quote-form__message svg {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+{% endstylesheet %}
