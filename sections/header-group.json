@@ -31,6 +31,7 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
@@ -60,7 +61,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "main-menu",
+            "menu": "menu-principal",
             "color_scheme": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
@@ -99,7 +100,7 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-1",
+        "color_scheme_top": "scheme-e5b7fce9-4f86-44f0-a8a3-be5642a35faf",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": false,
