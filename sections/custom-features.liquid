@@ -112,87 +112,91 @@
 {% stylesheet %}
 
 .housedecor-difference {
+  text-align: center;
+}
 
-  text-align:center;
+.housedecor-difference .difference-header {
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 60px;
+}
 
-  .difference-header{
-    max-width:800px;
-    margin:auto;
-    margin-bottom:60px;
+.housedecor-difference .difference-caption {
+  display: block;
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.housedecor-difference .difference-title {
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.housedecor-difference .difference-description {
+  opacity: 0.75;
+  font-size: 16px;
+}
+
+.housedecor-difference .difference-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media screen and (min-width: 750px) {
+  .housedecor-difference .difference-grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
   }
+}
 
-  .difference-caption{
-    display:block;
-    font-size:14px;
-    opacity:.6;
-    margin-bottom:8px;
+.housedecor-difference .difference-item {
+  text-align: center;
+}
+
+.housedecor-difference .difference-media {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  height: 320px;
+}
+
+.housedecor-difference .difference-media img,
+.housedecor-difference .difference-media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.housedecor-difference .difference-item-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.housedecor-difference .difference-item-text {
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+.housedecor-difference .difference-buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 749px) {
+  .housedecor-difference .difference-media {
+    height: 260px;
   }
-
-  .difference-title{
-    font-size:42px;
-    font-weight:600;
-    margin-bottom:16px;
-  }
-
-  .difference-description{
-    opacity:.75;
-    font-size:16px;
-  }
-
-  .difference-grid{
-
-    display:grid;
-    grid-template-columns:1fr;
-    gap:40px;
-
-    @media(min-width:750px){
-      grid-template-columns:repeat(3,1fr);
-    }
-
-  }
-
-  .difference-item{
-    text-align:center;
-  }
-
-  .difference-media{
-
-    border-radius:8px;
-    overflow:hidden;
-    margin-bottom:20px;
-
-    img,video{
-      width:100%;
-      height:auto;
-      display:block;
-    }
-
-  }
-
-  .difference-item-title{
-    font-size:22px;
-    margin-bottom:10px;
-  }
-
-  .difference-item-text{
-    font-size:15px;
-    opacity:.75;
-  }
-
-  .difference-buttons{
-
-    margin-top:40px;
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    flex-wrap:wrap;
-
-  }
-
 }
 
 {% endstylesheet %}
-
 
 
 {% schema %}
