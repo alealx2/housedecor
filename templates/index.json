@@ -15,8 +15,8 @@
         "slide_JpPmEQ": {
           "type": "_slide",
           "settings": {
-            "media_type_1": "image",
-            "image_1": "shopify://shop_images/pics_6.jpg",
+            "media_type_1": "video",
+            "video_1": "shopify://files/videos/clipdef1.mp4",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -370,10 +370,10 @@
         "caption": "Diferencia",
         "heading": "Lo que nos define",
         "description": "",
-        "button_1_label": "Cotizar",
+        "button_1_label": "",
         "button_1_link": "#",
         "button_1_style": "primary",
-        "button_2_label": "Contactar",
+        "button_2_label": "",
         "button_2_link": "/pages/contact",
         "button_2_style": "primary"
       }
@@ -388,12 +388,12 @@
           "settings": {
             "content_direction": "row",
             "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
             "align_baseline": true,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "gap": 25,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -410,7 +410,7 @@
             "border_opacity": 100,
             "border_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 41,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -419,11 +419,11 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>Muebles destacados</h3>",
+                "text": "<h2>Muebles destacados</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
+                "type_preset": "h2",
                 "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
@@ -440,25 +440,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "Ver más",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
+            "product_list_text_YFtzcL"
           ]
         },
         "static-product-card": {
@@ -572,6 +557,65 @@
         "padding-block-end": 48
       }
     },
+    "custom_gallery_YFKPTc": {
+      "type": "custom-gallery",
+      "blocks": {
+        "image_WPA7pc": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_5.jpg"
+          }
+        },
+        "image_QUHBBj": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_4.jpg"
+          }
+        },
+        "image_eaTE7M": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_14.jpg"
+          }
+        },
+        "image_GctcBt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_3.jpg"
+          }
+        },
+        "image_6zpXnN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_6.jpg"
+          }
+        },
+        "image_XpHGkP": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pics_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "image_WPA7pc",
+        "image_QUHBBj",
+        "image_eaTE7M",
+        "image_GctcBt",
+        "image_6zpXnN",
+        "image_XpHGkP"
+      ],
+      "name": "HouseDecor gallery grid",
+      "settings": {
+        "color_scheme": "scheme-e5b7fce9-4f86-44f0-a8a3-be5642a35faf",
+        "section_width": "page-width",
+        "caption": "",
+        "heading": "Proyectos recientes",
+        "description": "Cada detalle cuenta la historia de nuestro oficio",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
     "custom_split_item_qRRc8f": {
       "type": "custom-split-item",
       "blocks": {
@@ -623,7 +667,7 @@
       "name": "Multimedia con texto",
       "settings": {
         "color_scheme": "",
-        "section_width": "full-width",
+        "section_width": "page-width",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -688,7 +732,9 @@
           "name": "t:names.video",
           "settings": {
             "source": "uploaded",
-            "video_autoplay": false,
+            "video": "shopify://files/videos/clip1.mp4",
+            "video_url": "",
+            "video_autoplay": true,
             "video_loop": true,
             "alt": "",
             "custom_width": 100,
@@ -761,6 +807,7 @@
     "slideshow_8YGk99",
     "custom_features_Afmgn8",
     "product_list_fa6P9H",
+    "custom_gallery_YFKPTc",
     "custom_split_item_qRRc8f",
     "section_ehHAjP",
     "custom_request_info_mJELxY"
