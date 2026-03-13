@@ -1,0 +1,550 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<section
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style housedecor-split-features"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    {% render 'border-override', settings: section.settings %}
+  "
+  {% if request.visual_preview_mode %}
+    data-shopify-visual-preview
+  {% endif %}
+>
+  <div class="housedecor-split-features__rows">
+    {% for block in section.blocks %}
+      {% liquid
+        assign media_first = false
+        if block.settings.media_position == 'left'
+          assign media_first = true
+        endif
+      %}
+
+      <div class="housedecor-split-feature" {{ block.shopify_attributes }}>
+        {% if media_first %}
+          <div class="housedecor-split-feature__media">
+            <div class="housedecor-split-feature__media-inner">
+              {% if block.settings.video != blank %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    autoplay: false,
+                    loop: false,
+                    muted: false,
+                    controls: true,
+                    class: 'housedecor-split-feature__video'
+                }}
+              {% elsif block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'housedecor-split-feature__image'
+                }}
+              {% else %}
+                {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-image' }}
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="housedecor-split-feature__content">
+            <div class="housedecor-split-feature__content-inner">
+              {% if block.settings.caption != blank %}
+                <div class="text-block h6 housedecor-split-feature__caption">
+                  <p>{{ block.settings.caption }}</p>
+                </div>
+              {% endif %}
+
+              {% if block.settings.heading != blank %}
+                <div class="text-block h2 housedecor-split-feature__heading">
+                  <h2>{{ block.settings.heading }}</h2>
+                </div>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <div class="text-block paragraph rte housedecor-split-feature__description">
+                  {{ block.settings.description }}
+                </div>
+              {% endif %}
+
+              <div class="housedecor-split-feature__stats">
+                <div class="housedecor-split-feature__stat">
+                  {% if block.settings.stat_1_value != blank %}
+                    <div class="text-block h2 housedecor-split-feature__stat-value">
+                      <p>{{ block.settings.stat_1_value }}</p>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.stat_1_text != blank %}
+                    <div class="text-block paragraph housedecor-split-feature__stat-text">
+                      <p>{{ block.settings.stat_1_text }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="housedecor-split-feature__stat">
+                  {% if block.settings.stat_2_value != blank %}
+                    <div class="text-block h2 housedecor-split-feature__stat-value">
+                      <p>{{ block.settings.stat_2_value }}</p>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.stat_2_text != blank %}
+                    <div class="text-block paragraph housedecor-split-feature__stat-text">
+                      <p>{{ block.settings.stat_2_text }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="housedecor-split-feature__buttons">
+                {% if block.settings.button_1_label != blank %}
+                  <a
+                    href="{{ block.settings.button_1_link }}"
+                    class="{% if block.settings.button_1_style == 'secondary' %}button-secondary{% elsif block.settings.button_1_style == 'link' %}link{% else %}button{% endif %}"
+                  >
+                    {{ block.settings.button_1_label }}
+                  </a>
+                {% endif %}
+
+                {% if block.settings.button_2_label != blank %}
+                  <a
+                    href="{{ block.settings.button_2_link }}"
+                    class="{% if block.settings.button_2_style == 'secondary' %}button-secondary{% elsif block.settings.button_2_style == 'link' %}link{% else %}button{% endif %}"
+                  >
+                    {{ block.settings.button_2_label }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="housedecor-split-feature__content">
+            <div class="housedecor-split-feature__content-inner">
+              {% if block.settings.caption != blank %}
+                <div class="text-block h6 housedecor-split-feature__caption">
+                  <p>{{ block.settings.caption }}</p>
+                </div>
+              {% endif %}
+
+              {% if block.settings.heading != blank %}
+                <div class="text-block h2 housedecor-split-feature__heading">
+                  <h2>{{ block.settings.heading }}</h2>
+                </div>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <div class="text-block paragraph rte housedecor-split-feature__description">
+                  {{ block.settings.description }}
+                </div>
+              {% endif %}
+
+              <div class="housedecor-split-feature__stats">
+                <div class="housedecor-split-feature__stat">
+                  {% if block.settings.stat_1_value != blank %}
+                    <div class="text-block h2 housedecor-split-feature__stat-value">
+                      <p>{{ block.settings.stat_1_value }}</p>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.stat_1_text != blank %}
+                    <div class="text-block paragraph housedecor-split-feature__stat-text">
+                      <p>{{ block.settings.stat_1_text }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="housedecor-split-feature__stat">
+                  {% if block.settings.stat_2_value != blank %}
+                    <div class="text-block h2 housedecor-split-feature__stat-value">
+                      <p>{{ block.settings.stat_2_value }}</p>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.stat_2_text != blank %}
+                    <div class="text-block paragraph housedecor-split-feature__stat-text">
+                      <p>{{ block.settings.stat_2_text }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="housedecor-split-feature__buttons">
+                {% if block.settings.button_1_label != blank %}
+                  <a
+                    href="{{ block.settings.button_1_link }}"
+                    class="{% if block.settings.button_1_style == 'secondary' %}button-secondary{% elsif block.settings.button_1_style == 'link' %}link{% else %}button{% endif %}"
+                  >
+                    {{ block.settings.button_1_label }}
+                  </a>
+                {% endif %}
+
+                {% if block.settings.button_2_label != blank %}
+                  <a
+                    href="{{ block.settings.button_2_link }}"
+                    class="{% if block.settings.button_2_style == 'secondary' %}button-secondary{% elsif block.settings.button_2_style == 'link' %}link{% else %}button{% endif %}"
+                  >
+                    {{ block.settings.button_2_label }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="housedecor-split-feature__media">
+            <div class="housedecor-split-feature__media-inner">
+              {% if block.settings.video != blank %}
+                {{
+                  block.settings.video
+                  | video_tag:
+                    autoplay: false,
+                    loop: false,
+                    muted: false,
+                    controls: true,
+                    class: 'housedecor-split-feature__video'
+                }}
+              {% elsif block.settings.image != blank %}
+                {{
+                  block.settings.image
+                  | image_url: width: 1800
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'housedecor-split-feature__image'
+                }}
+              {% else %}
+                <div class="housedecor-split-feature__media-placeholder"></div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .housedecor-split-features__rows {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .housedecor-split-feature {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 750px) {
+    .housedecor-split-feature {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .housedecor-split-feature__content,
+  .housedecor-split-feature__media {
+    min-width: 0;
+  }
+
+  .housedecor-split-feature__content {
+    display: flex;
+    align-items: center;
+    background: rgb(var(--color-background-rgb));
+  }
+
+  .housedecor-split-feature__content-inner {
+    width: 100%;
+    padding-inline: var(--page-margin);
+    padding-block: calc(2 * var(--page-margin));
+  }
+
+  @media screen and (min-width: 750px) {
+    .housedecor-split-feature__content-inner {
+      padding-block: var(--page-margin);
+      max-width: min(100%, 56rem);
+      margin-inline: auto;
+    }
+  }
+
+  .housedecor-split-feature__caption {
+    margin-bottom: var(--margin-sm);
+    opacity: 0.8;
+  }
+
+  .housedecor-split-feature__heading {
+    margin-bottom: var(--margin-lg);
+  }
+
+  .housedecor-split-feature__description {
+    max-width: 52rem;
+    margin-bottom: var(--margin-xl);
+  }
+
+  .housedecor-split-feature__stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-lg);
+    margin-bottom: var(--margin-xl);
+    max-width: 42rem;
+  }
+
+  .housedecor-split-feature__stat-value {
+    margin-bottom: var(--margin-2xs);
+  }
+
+  .housedecor-split-feature__stat-value :is(p, h1, h2, h3, h4, h5, h6),
+  .housedecor-split-feature__stat-text :is(p, h1, h2, h3, h4, h5, h6),
+  .housedecor-split-feature__caption :is(p, h1, h2, h3, h4, h5, h6),
+  .housedecor-split-feature__heading :is(p, h1, h2, h3, h4, h5, h6),
+  .housedecor-split-feature__description :is(p, h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+  }
+
+  .housedecor-split-feature__buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    flex-wrap: wrap;
+  }
+
+  /* .housedecor-split-feature__media {
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+  } */
+
+.housedecor-split-feature__media-inner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+}
+
+.housedecor-split-feature__image,
+.housedecor-split-feature__video {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+.housedecor-split-feature__media-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgb(var(--color-foreground-rgb) / 0.08);
+}
+
+  @media screen and (max-width: 749px) {
+    .housedecor-split-feature__content-inner {
+      padding-inline: var(--page-margin);
+      padding-block: calc(1.5 * var(--page-margin));
+    }
+
+    .housedecor-split-feature__media-inner,
+    .housedecor-split-feature__media-placeholder {
+      min-height: 24rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Multimedia con texto",
+  "tag": "section",
+  "class": "section-housedecor-split-features",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature row",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "select",
+          "id": "media_position",
+          "label": "Posición multimedia",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Personalizados"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título",
+          "default": "Escritorio oculto"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Descripción",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+        },
+        {
+          "type": "header",
+          "content": "Estadística 1"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_value",
+          "label": "Valor 1",
+          "default": "50%"
+        },
+        {
+          "type": "text",
+          "id": "stat_1_text",
+          "label": "Texto 1",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "type": "header",
+          "content": "Estadística 2"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_value",
+          "label": "Valor 2",
+          "default": "50%"
+        },
+        {
+          "type": "text",
+          "id": "stat_2_text",
+          "label": "Texto 2",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "type": "header",
+          "content": "Botón 1"
+        },
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "label": "Texto botón 1",
+          "default": "Cotizar"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Enlace botón 1"
+        },
+        {
+          "type": "select",
+          "id": "button_1_style",
+          "label": "Estilo botón 1",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "link", "label": "Link" }
+          ],
+          "default": "secondary"
+        },
+        {
+          "type": "header",
+          "content": "Botón 2"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "label": "Texto botón 2",
+          "default": "Contactar"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Enlace botón 2"
+        },
+        {
+          "type": "select",
+          "id": "button_2_style",
+          "label": "Estilo botón 2",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "link", "label": "Link" }
+          ],
+          "default": "link"
+        },
+        {
+          "type": "header",
+          "content": "Multimedia"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multimedia con texto",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "media_position": "right",
+            "caption": "Encabezado",
+            "heading": "Titulo",
+            "stat_1_value": "50%",
+            "stat_2_value": "50%",
+            "button_1_label": "Botón",
+            "button_2_label": "Botón"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

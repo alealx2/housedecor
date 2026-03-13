@@ -17,7 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "Envios a RM y Valparaiso | Hasta 12  cuotas sin interes | Fabricamos a tu medida |",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
@@ -31,11 +31,12 @@
       "block_order": [
         "announcement_BxgCk9"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-b4c1cca2-03a4-42df-8eef-75b7cc93a2c0",
         "divider_width": 1,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -60,7 +61,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "main-menu",
+            "menu": "menu-principal",
             "color_scheme": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
@@ -99,7 +100,7 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-1",
+        "color_scheme_top": "scheme-e5b7fce9-4f86-44f0-a8a3-be5642a35faf",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": false,

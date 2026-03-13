@@ -1,11 +1,10 @@
-
-
 {% liquid
   assign block_settings = block.settings
   assign menu = block_settings.menu
   assign heading = block_settings.heading
   assign color_scheme = block_settings.color_scheme
   assign show_as_accordion = block_settings.show_as_accordion
+  assign menu_layout = block_settings.menu_layout
   if show_as_accordion == true and block_settings.accordion_dividers == true
     assign dividers_enabled = true
   endif
@@ -15,6 +14,7 @@
   <accordion-custom
     class="
       menu
+      menu--{{ menu_layout }}
       {% if show_as_accordion == true %} menu--accordion menu--{{ block_settings.accordion_icon }}{% endif %}
       {% if dividers_enabled == true %} menu--dividers{% endif %}
     "
@@ -33,7 +33,7 @@
       "
       data-testid="menu-details"
       style="
-        --spacing--size: {{ block_settings.menu_spacing }}px;
+        --menu-item-gap: {{ block_settings.menu_spacing }}px;
         {% render 'spacing-style', settings: block_settings %}
       "
       {% if show_as_accordion == false %}
@@ -56,7 +56,7 @@
 
       <div class="details-content">
         {% if menu %}
-          <ul class="list-unstyled">
+          <ul class="list-unstyled menu__list">
             {% for link in menu.links %}
               <li class="menu__item {{ block_settings.link_preset }}">
                 <a href="{{ link.url }}">
@@ -77,11 +77,30 @@
   }
 
   .menu:not(:has(.menu__heading--empty)) .details-content {
-    margin-block-start: var(--spacing--size);
+    margin-block-start: var(--menu-item-gap);
   }
 
-  .menu__item + .menu__item {
-    margin-block-start: var(--spacing--size);
+  .menu__list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu--vertical .menu__list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--menu-item-gap);
+  }
+
+  .menu--horizontal .menu__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--menu-item-gap);
+  }
+
+  .menu__item {
+    margin: 0;
   }
 
   .menu .menu__heading--empty {
@@ -97,7 +116,6 @@
   }
 
   @media screen and (max-width: 749px) {
-    /* Always show the fallback heading on mobile when accordion is enabled */
     .menu--accordion .menu__heading--empty {
       display: flex;
     }
@@ -111,7 +129,7 @@
     }
 
     .menu--accordion .details-content {
-      margin-block-start: var(--spacing--size);
+      margin-block-start: var(--menu-item-gap);
     }
 
     .menu--accordion .menu__details {
@@ -154,9 +172,25 @@
       "content": "t:content.appearance"
     },
     {
+      "type": "select",
+      "id": "menu_layout",
+      "label": "Orientación del menú",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ],
+      "default": "vertical"
+    },
+    {
       "type": "range",
       "id": "menu_spacing",
-      "label": "t:settings.vertical_gap",
+      "label": "Separación entre items",
       "min": 0,
       "max": 50,
       "step": 1,

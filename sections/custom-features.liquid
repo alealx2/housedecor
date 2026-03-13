@@ -1,0 +1,371 @@
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<section
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style housedecor-difference"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    {% render 'border-override', settings: section.settings %}
+  "
+>
+
+  <div class="difference-header">
+
+    {% if section.settings.caption != blank %}
+      <span class="difference-caption">
+        {{ section.settings.caption }}
+      </span>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h2 class="difference-title">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.description != blank %}
+      <div class="difference-description rte">
+        {{ section.settings.description }}
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div class="difference-grid">
+
+    {% for block in section.blocks %}
+
+      <div class="difference-item" {{ block.shopify_attributes }}>
+
+        <div class="difference-media">
+
+          {% if block.settings.video != blank %}
+            {{
+              block.settings.video
+              | video_tag:
+                autoplay: true,
+                loop: true,
+                muted: true,
+                controls: false
+            }}
+
+          {% elsif block.settings.image != blank %}
+
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                class: 'difference-img'
+            }}
+
+          {% endif %}
+
+        </div>
+
+        <div class="difference-content">
+
+          {% if block.settings.title != blank %}
+            <h3 class="difference-item-title">
+              {{ block.settings.title }}
+            </h3>
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+            <p class="difference-item-text">
+              {{ block.settings.text }}
+            </p>
+          {% endif %}
+
+        </div>
+
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+  <div class="difference-buttons">
+
+    {% if section.settings.button_1_label != blank %}
+      <a
+        href="{{ section.settings.button_1_link }}"
+        class="button button--{{ section.settings.button_1_style }}"
+      >
+        {{ section.settings.button_1_label }}
+      </a>
+    {% endif %}
+
+    {% if section.settings.button_2_label != blank %}
+      <a
+        href="{{ section.settings.button_2_link }}"
+        class="button button--{{ section.settings.button_2_style }}"
+      >
+        {{ section.settings.button_2_label }}
+      </a>
+    {% endif %}
+
+  </div>
+
+</section>
+
+
+{% stylesheet %}
+
+.housedecor-difference {
+  text-align: center;
+}
+
+.housedecor-difference .difference-header {
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+.housedecor-difference .difference-caption {
+  display: block;
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.housedecor-difference .difference-title {
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.housedecor-difference .difference-description {
+  opacity: 0.75;
+  font-size: 16px;
+}
+
+.housedecor-difference .difference-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media screen and (min-width: 750px) {
+  .housedecor-difference .difference-grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+}
+
+.housedecor-difference .difference-item {
+  text-align: center;
+}
+
+.housedecor-difference .difference-media {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  height: 320px;
+}
+
+.housedecor-difference .difference-media img,
+.housedecor-difference .difference-media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.housedecor-difference .difference-item-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.housedecor-difference .difference-item-text {
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+.housedecor-difference .difference-buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 749px) {
+  .housedecor-difference .difference-media {
+    height: 260px;
+  }
+}
+
+{% endstylesheet %}
+
+
+{% schema %}
+{
+  "name": "Grilla items",
+  "tag": "section",
+  "class": "section-difference",
+  "settings": [
+
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+    "type": "header",
+    "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "Diferencia"
+    },
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lo que nos define"
+    },
+
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Botón 1 label",
+      "default": "Explorar"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Botón 1 link"
+    },
+    {
+      "type": "select",
+      "id": "button_1_style",
+      "label": "Botón 1 estilo",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "link", "label": "Link" }
+      ],
+      "default": "primary"
+    },
+
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Botón 2 label",
+      "default": "Contactar"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Botón 2 link"
+    },
+    {
+      "type": "select",
+      "id": "button_2_style",
+      "label": "Botón 2 estilo",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "link", "label": "Link" }
+      ],
+      "default": "secondary"
+    }
+
+  ],
+
+  "blocks": [
+
+    {
+      "type": "item",
+      "name": "Item",
+      "limit": 3,
+      "settings": [
+
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        }
+
+      ]
+    }
+
+  ],
+
+  "presets": [
+    {
+      "name": "Grilla items",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
