@@ -1,5 +1,30 @@
+@font-face {
+  font-family: 'Seasons';
+  src: url('https://cdn.shopify.com/s/files/1/0810/7792/8156/files/The_Seasons.woff2?v=1773614997') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Garect';
+  src: url('https://cdn.shopify.com/s/files/1/0810/7792/8156/files/Garetc.woff2?v=1773615025') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.text-block:not(.text-block--full-width):is(.h1,.h2,.h3,.h4,.h5,.h6){  
+  font-family: 'Seasons', sans-serif !important;
+}
+:is(.rte,.shopify-policy__title) :first-child:is(h1,h2,h3,h4,h5,h6), :is(.rte,.shopify-policy__title) :first-child:empty+:is(h1,h2,h3,h4,h5,h6){
+  font-family: 'Seasons', sans-serif !important;
+}
+h2, .h2.h2, .text-block.h2>*{
+  font-family: 'Seasons', sans-serif !important;
+}
+
+
 * {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 body {
