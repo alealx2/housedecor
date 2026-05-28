@@ -126,16 +126,25 @@
                 >
 
                 {% if variant_style == 'color_swatches' %}
-                  {% liquid
-                    assign color_meta = matched_variant.metafields.custom.color.value
-
-                    assign color_label = color_meta.nombre.value | default: color_meta.nombre | default: color_meta.label.value | default: color_meta.label | default: color_meta.name.value | default: color_meta.name | default: product_option_value 
-                    assign color_hex = color_meta.hex.value | default: color_meta.hex | default: color_meta.color.value | default: color_meta.color | default: color_meta.codigo_hex.value | default: color_meta.codigo_hex | default: color_meta.codigo.value | default: color_meta.codigo | default: '#d9d9d9'                  
-                   %}
+                
+                {% liquid
+                  assign color_label = product_option_value.name | default: product_option_value
+                  assign color_swatch = product_option_value.swatch
+                  assign color_hex = color_swatch.color
+                  assign color_image = color_swatch.image
+                %}
 
                   <span
                     class="variant-option__color-swatch"
-                    style="--variant-color-swatch: {{ color_hex }};"
+                    style="
+                      {% if color_image != blank %}
+                        background-image: url({{ color_image | image_url: width: 80 }});
+                        background-size: cover;
+                        background-position: center;
+                      {% elsif color_hex != blank %}
+                        --variant-color-swatch: {{ color_hex }};
+                      {% endif %}
+                    "
                     title="{{ color_label | escape }}"
                   ></span>
                   <span class="visually-hidden">
