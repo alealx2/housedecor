@@ -173,16 +173,7 @@
       %}
     </a>
   {% elsif product != blank and product.media.size == 0 %}
-    <product-title class="product-card-gallery__title-placeholder">
-      <a
-        class="contents"
-        ref="productTitleLink"
-        href="{{ product.selected_or_first_available_variant.url }}"
-        aria-hidden="true"
-      >
-        <span class="title-text">{{- product.title -}}</span>
-      </a>
-    </product-title>
+    {{ 'product-1' | placeholder_svg_tag: 'product-media__image product-media__placeholder-svg' }}
   {% elsif product == blank %}
     {% liquid
       capture placeholder_image

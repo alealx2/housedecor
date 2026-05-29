@@ -52,7 +52,7 @@
   assign product_grid_class = 'product-information__grid'
 
   if product_has_media == false
-    assign product_grid_class = product_grid_class | append: ' product-information--media-none'
+    assign product_grid_class = product_grid_class | append: ' product-information--media-left'
   elsif settings.desktop_media_position == 'right'
     assign product_grid_class = product_grid_class | append: ' product-information--media-right'
   else
@@ -90,6 +90,13 @@
     class="{{ product_grid_class }}"
     data-product-grid-content
   >
+    {% if product_media_size == 0 %}
+      <div class="product-information__media" data-testid="product-information-media"
+      >
+        {{ 'product-1' | placeholder_svg_tag: 'product-information__media product-media__image product-media__placeholder-svg' }}
+      </div>
+    {% endif %}
+    
     {% assign render_order_array = render_order | split: ',' %}
     {% capture media %}
       <div
