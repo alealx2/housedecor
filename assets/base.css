@@ -12,7 +12,7 @@
   font-style: normal;
 }
 
-/* .text-block:not(.text-block--full-width):is(.h1,.h2,.h3,.h4,.h5,.h6){  
+.text-block:not(.text-block--full-width):is(.h1,.h2,.h3,.h4,.h5,.h6){  
   font-family: 'Seasons', sans-serif !important;
 }
 :is(.rte,.shopify-policy__title) :first-child:is(h1,h2,h3,h4,h5,h6), :is(.rte,.shopify-policy__title) :first-child:empty+:is(h1,h2,h3,h4,h5,h6){
@@ -20,7 +20,7 @@
 }
 h2, .h2.h2, .text-block.h2>*{
   font-family: 'Seasons', sans-serif !important;
-} */
+}
 
 
 * {
@@ -2754,10 +2754,6 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 .quantity-selector .quantity-plus {
   border-start-end-radius: var(--style-border-radius-inputs);
   border-end-end-radius: var(--style-border-radius-inputs);
-}
-
-.quick-add-modal .product-details {
-  padding: 0 !important;
 }
 
 .product-details .quantity-selector {
