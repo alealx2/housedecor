@@ -48,7 +48,6 @@
         "heading",
         "page-content"
       ],
-      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -56,69 +55,9 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
-    },
-    "custom_gallery_UbwLgp": {
-      "type": "custom-gallery",
-      "blocks": {
-        "image_ReR83E": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_15.jpg"
-          }
-        },
-        "image_8RyzeV": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_4.jpg"
-          }
-        },
-        "image_TzxhqX": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_13.jpg"
-          }
-        },
-        "image_aitH9W": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_6.jpg"
-          }
-        },
-        "image_cy7m7Q": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_3.jpg"
-          }
-        },
-        "image_EwB4mm": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/pics_1.jpg"
-          }
-        }
-      },
-      "block_order": [
-        "image_ReR83E",
-        "image_8RyzeV",
-        "image_TzxhqX",
-        "image_aitH9W",
-        "image_cy7m7Q",
-        "image_EwB4mm"
-      ],
-      "name": "Galería imágenes",
-      "settings": {
-        "color_scheme": "scheme-e5b7fce9-4f86-44f0-a8a3-be5642a35faf",
-        "section_width": "page-width",
-        "caption": "",
-        "heading": "Proyectos recientes",
-        "description": "Cada detalle cuenta la historia de nuestro oficio",
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
     }
   },
   "order": [
-    "main",
-    "custom_gallery_UbwLgp"
+    "main"
   ]
 }
