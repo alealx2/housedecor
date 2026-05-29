@@ -10,6 +10,7 @@
   @param {number} [content_aspect_ratio] - Aspect ratio for content images.
   @param {number} [image_border_radius] - Border radius for content images.
   @param {object} [section] - The section object.
+  @param {object[]} [selected_featured_collections] - Manually selected collections to show in featured collections mode.
 
   @example
   {% render 'mega-menu-list', parent_link: link, id: 'MegaMenuList-1', grid_columns_count: 6, menu_content_type: 'featured_products' %}
@@ -50,15 +51,26 @@
   endif
 
   if menu_content_type == 'featured_collections'
-    if parent_link.type == 'collection_link'
-      assign collection_handles = parent_link.object.handle | append: ','
-    elsif parent_link.type == 'catalog_link' or parent_link.type == 'collections_link'
-      assign collection_handles = 'all' | append: ','
+    assign collection_handles = ''
+
+    if selected_featured_collections != blank and selected_featured_collections.size > 0
+      for selected_collection in selected_featured_collections
+        if selected_collection.handle != blank
+          assign collection_handles = collection_handles | append: selected_collection.handle | append: ','
+        endif
+      endfor
+    else
+      if parent_link.type == 'collection_link'
+        assign collection_handles = parent_link.object.handle | append: ','
+      endif
+
+      assign collection_links = parent_link.links | where: 'type', 'collection_link'
+      for collection_link in collection_links
+        if collection_link.object.handle != blank
+          assign collection_handles = collection_handles | append: collection_link.object.handle | append: ','
+        endif
+      endfor
     endif
-    assign collection_links = parent_link.links | where: 'type', 'collection_link'
-    for collection_link in collection_links
-      assign collection_handles = collection_handles | append: collection_link.object.handle | append: ','
-    endfor
   endif
 
   if menu_content_type == 'featured_products'
@@ -192,7 +204,7 @@
   assign max_products = 3
   assign min_products_tablet = 1
   assign max_products_tablet = 3
-  assign min_collections = 1
+  assign min_collections = 3
 
   if menu_content_type == 'featured_products'
     # desktop breakpoint
@@ -229,17 +241,22 @@
   endif
 
   if menu_content_type == 'featured_collections'
-    # desktop breakpoint
-    assign min_featured_collection_columns = min_collections | times: 2
-    assign temp_column_count = column_count | plus: min_featured_collection_columns
+    assign collection_handles_preview = collection_handles | split: ',' | uniq
+    assign available_featured_collections = 0
 
-    if temp_column_count > max_menu_columns
-      assign max_collection_columns = 2
-    else
-      assign max_collection_columns = max_menu_columns | minus: column_count
+    for handle in collection_handles_preview
+      if handle != blank
+        assign available_featured_collections = available_featured_collections | plus: 1
+      endif
+    endfor
+
+    # Show at least 3 featured collections when available.
+    assign max_featured_collections = available_featured_collections | at_most: 6
+    if max_featured_collections > 0 and max_featured_collections < min_collections
+      assign max_featured_collections = available_featured_collections
     endif
 
-    assign max_featured_collections = max_collection_columns | divided_by: 2 | floor
+    assign max_collection_columns = max_featured_collections
     assign max_menu_columns = max_menu_columns | minus: max_collection_columns
 
     # tablet breakpoint
@@ -327,21 +344,28 @@
         class="mega-menu__content-list mega-menu__content-list--collections list-unstyled"
         style="--menu-content-columns-desktop: {{ max_featured_collections }}; --menu-content-columns-tablet: {{ max_featured_collections_tablet }};"
       >
-        {% for handle in collection_handles limit: max_featured_collections %}
-          {% if handle == 'all' %}
-            {% assign collection_object = collections.all %}
-          {% else %}
-            {% assign collection_object = collections[handle] %}
+        {% assign rendered_featured_collections = 0 %}
+        {% for handle in collection_handles %}
+          {% if rendered_featured_collections >= max_featured_collections %}
+            {% break %}
           {% endif %}
-          <li class="mega-menu__content-list-item{% if forloop.index > max_featured_collections_tablet %} mega-menu__content-list-item--hidden-tablet{% endif %}">
-            {% render 'resource-card',
-              resource: collection_object,
-              resource_type: 'collection',
-              style: 'overlay',
-              image_aspect_ratio: content_aspect_ratio,
-              image_sizes: image_sizes
-            %}
-          </li>
+
+          {% if handle != blank %}
+            {% assign collection_object = collections[handle] %}
+
+            {% if collection_object != blank %}
+              {% assign rendered_featured_collections = rendered_featured_collections | plus: 1 %}
+              <li class="mega-menu__content-list-item{% if rendered_featured_collections > max_featured_collections_tablet %} mega-menu__content-list-item--hidden-tablet{% endif %}">
+                {% render 'resource-card',
+                  resource: collection_object,
+                  resource_type: 'collection',
+                  style: 'overlay',
+                  image_aspect_ratio: content_aspect_ratio,
+                  image_sizes: image_sizes
+                %}
+              </li>
+            {% endif %}
+          {% endif %}
         {% endfor %}
       </ul>
     </span>

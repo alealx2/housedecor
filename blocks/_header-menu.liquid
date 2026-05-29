@@ -125,7 +125,8 @@
                       grid_columns_count_collection_images: 8,
                       menu_content_type: menu_content_type,
                       content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
+                      image_border_radius: image_border_radius,
+                      selected_featured_collections: block_settings.featured_collections
                     %}
                   </div>
                 </div>
@@ -876,6 +877,14 @@
         }
       ],
       "default": "16 / 9",
+      "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
+    },
+    {
+      "type": "collection_list",
+      "id": "featured_collections",
+      "label": "Colecciones destacadas",
+      "info": "Selecciona al menos 3 colecciones para mostrarlas en el megamenú. Si no seleccionas ninguna, se usarán las colecciones enlazadas en el menú.",
+      "limit": 6,
       "visible_if": "{{ block.settings.menu_style == 'featured_collections' }}"
     },
     {
