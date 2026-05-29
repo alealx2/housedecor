@@ -9,6 +9,8 @@
   @param {string} [style] - HTML style attribute of the slideshow component
   @param {boolean} [autoplay] - whether the slideshow will autoplay
   @param {number} [autoplay_speed] - the speed of the slideshow autoplay
+  @param {number} [autoplay_step] - how many slides the autoplay advances each time
+  @param {boolean} [pause_on_hover] - whether autoplay pauses while hovering the slideshow
   @param {boolean} [auto_hide_controls] - whether to hide slideshow-controls when the scroller is smaller than the viewport
   @param {boolean} [infinite] - whether the slideshow will loop
   @param {number} [initial_slide] - the 0-based index of the initial slide, defaults to 0
@@ -84,7 +86,12 @@
   {% endif %}
   style="--slideshow-timeline: {{ timeline_scope }};{{ style }}"
   {% if autoplay == true %}
-    autoplay="{{ autoplay_speed }}" aria-live="polite"
+    autoplay="{{ autoplay_speed | default: 3 }}"
+    autoplay-step="{{ autoplay_step | default: 1 }}"
+    {% unless pause_on_hover == false %}
+      pause-on-hover
+    {% endunless %}
+    aria-live="polite"
   {% endif %}
   initial-slide="{{ initial_slide | default: 0 }}"
   {% if auto_hide_controls %}

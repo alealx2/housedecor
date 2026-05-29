@@ -346,6 +346,24 @@
       "visible_if": "{{ block.settings.icons_style != 'none' and block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
     },
     {
+      "type": "checkbox",
+      "id": "carousel_autoplay",
+      "label": "Autoplay del carrusel",
+      "default": false,
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "range",
+      "id": "carousel_autoplay_speed",
+      "label": "Velocidad autoplay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 3,
+      "visible_if": "{{ block.settings.carousel_autoplay }}"
+    },
+    {
       "type": "header",
       "content": "t:content.layout"
     },
@@ -512,10 +530,16 @@
               }
             }
           },
-          "block_order": ["product-card-gallery", "product_title", "price"]
+          "block_order": [
+            "product-card-gallery",
+            "product_title",
+            "price"
+          ]
         }
       },
-      "block_order": ["heading"]
+      "block_order": [
+        "heading"
+      ]
     }
   ]
 }

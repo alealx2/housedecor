@@ -1,0 +1,57 @@
+{%- doc -%}
+  Renders a visual-only list of color swatches for product cards.
+  Shows up to 5 colors and a +N counter when more colors exist.
+
+  @param {object} product_resource - The product object.
+  @param {number} [limit] - Maximum swatches to show.
+{%- enddoc -%}
+
+{%- liquid
+  assign swatch_limit = limit | default: 5
+  assign color_option = blank
+
+  for product_option in product_resource.options_with_values
+    assign option_name_downcase = product_option.name | downcase
+    if option_name_downcase contains 'color' or option_name_downcase contains 'colour'
+      assign color_option = product_option
+      break
+    endif
+  endfor
+-%}
+
+{%- if color_option != blank and color_option.values.size > 0 -%}
+  {%- liquid
+    assign color_count = color_option.values.size
+    assign extra_colors_count = color_count | minus: swatch_limit
+  -%}
+
+  <div class="product-card-color-swatches" aria-label="Colores disponibles">
+    {%- for product_option_value in color_option.values limit: swatch_limit -%}
+      {%- liquid
+        assign color_label = product_option_value.name | default: product_option_value
+        assign swatch = product_option_value.swatch
+        assign swatch_value = blank
+
+        if swatch.image
+          assign swatch_image_url = swatch.image | image_url: width: 80
+          assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
+        elsif swatch.color
+          assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
+        endif
+      -%}
+
+      <span
+        class="product-card-color-swatches__item{% if swatch_value == blank %} product-card-color-swatches__item--empty{% endif %}"
+        title="{{ color_label | escape }}"
+        aria-label="{{ color_label | escape }}"
+        style="{% if swatch_value != blank %}--product-card-swatch-background: {{ swatch_value }};{% endif %}{% if swatch.image %} --product-card-swatch-focal-point: {{ swatch.image.presentation.focal_point }};{% endif %}"
+      ></span>
+    {%- endfor -%}
+
+    {%- if extra_colors_count > 0 -%}
+      <span class="product-card-color-swatches__more" aria-label="{{ extra_colors_count }} colores adicionales">
+        +{{ extra_colors_count }}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

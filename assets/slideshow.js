@@ -83,6 +83,8 @@ export class Slideshow extends Component {
       this.#scroll.destroy();
     }
 
+    clearTimeout(this.#resumeTimeout);
+
     const slideCount = this.slides?.length || 0;
     if (slideCount > 1) {
       this.removeEventListener('mouseenter', this.suspend);
@@ -245,6 +247,12 @@ export class Slideshow extends Component {
    */
   next(event, options) {
     event?.preventDefault();
+
+    if (event) {
+      this.suspend();
+      this.resumeDelayed();
+    }
+
     this.select(this.nextIndex, event, options);
   }
 
@@ -256,6 +264,12 @@ export class Slideshow extends Component {
    */
   previous(event, options) {
     event?.preventDefault();
+
+    if (event) {
+      this.suspend();
+      this.resumeDelayed();
+    }
+
     this.select(this.previousIndex, event, options);
   }
 
@@ -269,9 +283,12 @@ export class Slideshow extends Component {
     this.paused = false;
 
     this.#interval = setInterval(() => {
-      if (this.matches(':hover') || document.hidden) return;
+      if (this.pauseOnHover && this.matches(':hover')) return;
+      if (document.hidden) return;
+      if (this.hasAttribute('dragging')) return;
+      if (this.#disabled) return;
 
-      this.next();
+      this.autoplayNext();
     }, interval);
   }
 
@@ -309,8 +326,30 @@ export class Slideshow extends Component {
   resume() {
     if (!this.autoplay || this.paused) return;
 
-    this.pause();
+    this.suspend();
     this.play();
+  }
+
+  /**
+   * Resumes automatic slide playback after a short interaction delay.
+   * @param {number} [delay] - Delay in milliseconds before resuming autoplay.
+   */
+  resumeDelayed(delay = 3000) {
+    clearTimeout(this.#resumeTimeout);
+
+    this.#resumeTimeout = setTimeout(() => {
+      if (!this.pauseOnHover || !this.matches(':hover')) {
+        this.resume();
+      }
+    }, delay);
+  }
+
+  /**
+   * Advances the slideshow automatically using the configured autoplay step.
+   */
+  autoplayNext() {
+    const step = this.autoplayStep || 1;
+    this.select(this.current + step, undefined, { animate: true });
   }
 
   get autoplay() {
@@ -319,11 +358,24 @@ export class Slideshow extends Component {
 
   get autoplayInterval() {
     const interval = this.getAttribute('autoplay');
-    const value = parseInt(`${interval}`, 10);
+    const value = parseFloat(`${interval}`);
 
     if (Number.isNaN(value)) return undefined;
 
     return value * 1000;
+  }
+
+  get autoplayStep() {
+    const step = this.getAttribute('autoplay-step');
+    const value = parseInt(`${step}`, 10);
+
+    if (Number.isNaN(value) || value < 1) return 1;
+
+    return value;
+  }
+
+  get pauseOnHover() {
+    return this.hasAttribute('pause-on-hover');
   }
 
   /**
@@ -419,6 +471,12 @@ export class Slideshow extends Component {
   #interval = undefined;
 
   /**
+   * Timeout ID used to resume autoplay after user interaction.
+   * @type {number|undefined}
+   */
+  #resumeTimeout = undefined;
+
+  /**
    * The Scroller instance that manages scrolling.
    * @type {Scroller}
    */
@@ -476,8 +534,10 @@ export class Slideshow extends Component {
 
     scroller.addEventListener('mousedown', this.#handleMouseDown);
 
-    this.addEventListener('mouseenter', this.suspend);
-    this.addEventListener('mouseleave', this.resume);
+    if (this.pauseOnHover) {
+      this.addEventListener('mouseenter', this.suspend);
+      this.addEventListener('mouseleave', this.resume);
+    }
     this.addEventListener('pointerenter', this.#handlePointerEnter);
     document.addEventListener('visibilitychange', this.#handleVisibilityChange);
 
@@ -652,7 +712,7 @@ export class Slideshow extends Component {
           return;
         }
 
-        this.pause();
+        this.suspend();
         this.setAttribute('dragging', '');
       }
 
@@ -718,7 +778,7 @@ export class Slideshow extends Component {
       if (this.#dragging) return;
 
       this.#scroll.snap = true;
-      this.resume();
+      this.resumeDelayed();
     };
 
     this.#scroll.snap = false;
@@ -757,7 +817,7 @@ export class Slideshow extends Component {
   /**
    * Pause the slideshow when the page is hidden.
    */
-  #handleVisibilityChange = () => (document.hidden ? this.pause() : this.resume());
+  #handleVisibilityChange = () => (document.hidden ? this.suspend() : this.resume());
 
   #updateControlsVisibility() {
     if (!this.hasAttribute('auto-hide-controls')) return;
