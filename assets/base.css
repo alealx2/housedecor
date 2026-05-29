@@ -2756,6 +2756,10 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   border-end-end-radius: var(--style-border-radius-inputs);
 }
 
+.quick-add-modal .product-details {
+  padding: 0 !important;
+}
+
 .product-details .quantity-selector {
   border-radius: var(--style-border-radius-buttons-primary);
 }
