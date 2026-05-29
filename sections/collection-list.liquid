@@ -29,6 +29,7 @@
   style="
     {% render 'spacing-style', settings: section.settings %}
     {% render 'gap-style', value: section.settings.gap %}
+    --collection-title-color: {{ section.settings.collection_title_color | default: 'inherit' }};
   "
   data-testid="collection-list"
 >
@@ -108,7 +109,10 @@
     }
   ],
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "settings": [
     {
@@ -294,6 +298,31 @@
       "visible_if": "{{ section.settings.icons_style != 'none' and section.settings.layout_type == 'carousel' or section.settings.carousel_on_mobile == true }}"
     },
     {
+      "type": "checkbox",
+      "id": "carousel_autoplay",
+      "label": "Autoplay del carrusel",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' or section.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "range",
+      "id": "carousel_autoplay_speed",
+      "label": "Velocidad autoplay",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "s",
+      "default": 3,
+      "visible_if": "{{ section.settings.carousel_autoplay }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_pause_on_hover",
+      "label": "Pausar autoplay al pasar el mouse",
+      "default": true,
+      "visible_if": "{{ section.settings.carousel_autoplay }}"
+    },
+    {
       "type": "header",
       "content": "t:content.section_layout"
     },
@@ -328,6 +357,12 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "collection_title_color",
+      "label": "Color de títulos de colecciones",
+      "default": "#000000"
     },
     {
       "type": "header",
@@ -421,7 +456,9 @@
               }
             }
           },
-          "block_order": ["text_bc98Wh"]
+          "block_order": [
+            "text_bc98Wh"
+          ]
         },
         "static-collection-card": {
           "type": "_collection-card",
@@ -470,10 +507,14 @@
               }
             }
           },
-          "block_order": ["collection-title"]
+          "block_order": [
+            "collection-title"
+          ]
         }
       },
-      "block_order": ["group_Lg9LkF"]
+      "block_order": [
+        "group_Lg9LkF"
+      ]
     },
     {
       "name": "t:names.collections_grid",
@@ -533,7 +574,9 @@
               }
             }
           },
-          "block_order": ["text_bc98Wh"]
+          "block_order": [
+            "text_bc98Wh"
+          ]
         },
         "static-collection-card": {
           "type": "_collection-card",
@@ -582,10 +625,14 @@
               }
             }
           },
-          "block_order": ["collection-title"]
+          "block_order": [
+            "collection-title"
+          ]
         }
       },
-      "block_order": ["group_Lg9LkF"],
+      "block_order": [
+        "group_Lg9LkF"
+      ],
       "settings": {
         "collection_list": [],
         "layout_type": "grid",
@@ -661,7 +708,9 @@
               }
             }
           },
-          "block_order": ["text_nQEaGV"]
+          "block_order": [
+            "text_nQEaGV"
+          ]
         },
         "static-collection-card": {
           "type": "_collection-card",
@@ -708,10 +757,14 @@
               }
             }
           },
-          "block_order": ["collection-title"]
+          "block_order": [
+            "collection-title"
+          ]
         }
       },
-      "block_order": ["group_EYUh3J"],
+      "block_order": [
+        "group_EYUh3J"
+      ],
       "settings": {
         "collection_list": [],
         "layout_type": "carousel",
@@ -799,7 +852,9 @@
               "blocks": {}
             }
           },
-          "block_order": ["text"]
+          "block_order": [
+            "text"
+          ]
         },
         "static-collection-card": {
           "type": "_collection-card",
@@ -861,10 +916,14 @@
               "blocks": {}
             }
           },
-          "block_order": ["collection-title"]
+          "block_order": [
+            "collection-title"
+          ]
         }
       },
-      "block_order": ["group"],
+      "block_order": [
+        "group"
+      ],
       "settings": {
         "collection_list": [],
         "layout_type": "editorial",
