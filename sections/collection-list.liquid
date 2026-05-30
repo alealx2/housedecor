@@ -24,14 +24,25 @@
     color-{{ section.settings.color_scheme }}
     section-resource-list
     spacing-style
-    gap-style
+    gap-style{% if section.settings.scroll_fade_in %} scroll-fade-in{% endif %}
   "
   style="
+
+    {% if section.settings.scroll_fade_in %}
+      --scroll-fade-duration: {{ section.settings.scroll_fade_duration | default: 900 }}ms;
+      --scroll-fade-delay: {{ section.settings.scroll_fade_delay | default: 0 }}ms;
+      --scroll-fade-offset: {{ section.settings.scroll_fade_offset | default: 20 }}px;
+    {% endif %}
     {% render 'spacing-style', settings: section.settings %}
     {% render 'gap-style', value: section.settings.gap %}
     --collection-title-color: {{ section.settings.collection_title_color | default: 'inherit' }};
   "
   data-testid="collection-list"
+
+  {% if section.settings.scroll_fade_in %}
+    data-scroll-fade
+    data-scroll-fade-direction="{{ section.settings.scroll_fade_direction | default: 'up' }}"
+  {% endif %}
 >
   <div class="section-resource-list__content">
     {%- content_for 'blocks' -%}
@@ -363,6 +374,78 @@
       "id": "collection_title_color",
       "label": "Color de títulos de colecciones",
       "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Animación al hacer scroll"
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_fade_in",
+      "label": "Activar fade-in al hacer scroll",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "scroll_fade_direction",
+      "label": "Dirección de aparición",
+      "options": [
+        {
+          "value": "up",
+          "label": "Desde abajo"
+        },
+        {
+          "value": "down",
+          "label": "Desde arriba"
+        },
+        {
+          "value": "left",
+          "label": "Desde la izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Desde la derecha"
+        },
+        {
+          "value": "none",
+          "label": "Solo opacidad"
+        }
+      ],
+      "default": "up",
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_duration",
+      "label": "Duración",
+      "min": 300,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 900,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_delay",
+      "label": "Retraso",
+      "min": 0,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_offset",
+      "label": "Distancia de desplazamiento",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
     },
     {
       "type": "header",

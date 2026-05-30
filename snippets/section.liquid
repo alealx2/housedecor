@@ -7,14 +7,25 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}{% if section.settings.scroll_fade_in %} scroll-fade-in{% endif %}"
   data-testid="ui-test-section"
+
+  {% if section.settings.scroll_fade_in %}
+    data-scroll-fade
+    data-scroll-fade-direction="{{ section.settings.scroll_fade_direction | default: 'up' }}"
+  {% endif %}
 
   {% if request.visual_preview_mode %}
     data-shopify-visual-preview
   {% endif %}
 
   style="
+
+    {% if section.settings.scroll_fade_in %}
+      --scroll-fade-duration: {{ section.settings.scroll_fade_duration | default: 900 }}ms;
+      --scroll-fade-delay: {{ section.settings.scroll_fade_delay | default: 0 }}ms;
+      --scroll-fade-offset: {{ section.settings.scroll_fade_offset | default: 20 }}px;
+    {% endif %}
     {% if section.settings.section_height == 'custom' %}
       --section-min-height: {{ section.settings.section_height_custom }}svh;
     {% elsif section.settings.section_height == 'full-screen' %}

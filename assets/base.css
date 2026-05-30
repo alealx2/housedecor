@@ -4069,3 +4069,59 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
+
+
+/* House Decor - section scroll fade-in */
+.scroll-fade-in {
+  --scroll-fade-duration: 900ms;
+  --scroll-fade-delay: 0ms;
+  --scroll-fade-offset: 20px;
+}
+
+.scroll-fade-in[data-scroll-fade] {
+  transition:
+    opacity var(--scroll-fade-duration) ease,
+    transform var(--scroll-fade-duration) cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--scroll-fade-delay);
+  will-change: opacity, transform;
+}
+
+.scroll-fade-in[data-scroll-fade]:not(.is-visible) {
+  opacity: 0;
+  transform: translate3d(0, var(--scroll-fade-offset), 0);
+}
+
+.scroll-fade-in[data-scroll-fade][data-scroll-fade-direction='down']:not(.is-visible) {
+  transform: translate3d(0, calc(var(--scroll-fade-offset) * -1), 0);
+}
+
+.scroll-fade-in[data-scroll-fade][data-scroll-fade-direction='left']:not(.is-visible) {
+  transform: translate3d(calc(var(--scroll-fade-offset) * -1), 0, 0);
+}
+
+.scroll-fade-in[data-scroll-fade][data-scroll-fade-direction='right']:not(.is-visible) {
+  transform: translate3d(var(--scroll-fade-offset), 0, 0);
+}
+
+.scroll-fade-in[data-scroll-fade][data-scroll-fade-direction='none']:not(.is-visible) {
+  transform: none;
+}
+
+.scroll-fade-in[data-scroll-fade].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.shopify-design-mode .scroll-fade-in[data-scroll-fade]:not(.is-visible) {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade-in[data-scroll-fade],
+  .scroll-fade-in[data-scroll-fade].is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
