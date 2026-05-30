@@ -324,6 +324,11 @@
         "slideshow_controls_style": "dots",
         "autoplay": false,
         "autoplay_speed": 4,
+        "scroll_fade_in": false,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -365,6 +370,11 @@
       "settings": {
         "color_scheme": "scheme-3a0669c3-8cf8-4e44-b7d8-b4572242d6a9",
         "section_width": "page-width",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 35,
         "padding-block-end": 40,
         "caption": "Diferencia",
@@ -556,6 +566,11 @@
         "horizontal_alignment": "flex-start",
         "gap": 28,
         "color_scheme": "scheme-1",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -729,6 +744,11 @@
         "gap": 12,
         "color_scheme": "",
         "collection_title_color": "#000000",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -788,6 +808,11 @@
         "caption": "",
         "heading": "Proyectos recientes",
         "description": "Cada detalle cuenta la historia de nuestro oficio",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
@@ -844,6 +869,11 @@
       "settings": {
         "color_scheme": "",
         "section_width": "page-width",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -958,6 +988,11 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
+        "scroll_fade_in": true,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 32,
         "padding-block-end": 32
       }
@@ -974,6 +1009,11 @@
         "email": "nblazco@gmail.com",
         "phone": "+56 9 7232 7157",
         "address": "Ñuble 1034, Santiago Chile",
+        "scroll_fade_in": false,
+        "scroll_fade_direction": "up",
+        "scroll_fade_duration": 900,
+        "scroll_fade_delay": 0,
+        "scroll_fade_offset": 20,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
