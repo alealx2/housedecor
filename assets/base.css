@@ -84,8 +84,9 @@ input:hover {
   background-color: var(--color-input-hover-background);
 }
 
-rte-formatter p {
-  width: 100%;
+.product-information .text-block p, .custom-accordion .details-content .text-block p {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /** override ios and firefox defaults */
