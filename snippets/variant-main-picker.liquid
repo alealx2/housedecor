@@ -127,12 +127,38 @@
 
                 {% if variant_style == 'color_swatches' %}
                 
-                {% liquid
-                  assign color_label = product_option_value.name | default: product_option_value
-                  assign color_swatch = product_option_value.swatch
-                  assign color_hex = color_swatch.color
-                  assign color_image = color_swatch.image
-                %}
+                  {% liquid
+
+                    assign color_label = product_option_value.name | default: product_option_value
+
+                    assign matched_variant = blank
+
+                    case product_option.position
+                      when 1
+                        assign matched_variant = product_resource.variants | where: 'option1', product_option_value | first
+                      when 2
+                        assign matched_variant = product_resource.variants | where: 'option2', product_option_value | first
+                      when 3
+                        assign matched_variant = product_resource.variants | where: 'option3', product_option_value | first
+                    endcase
+
+                    assign color_meta = blank
+                    assign color_hex = blank
+                    assign color_image = blank
+
+                    if matched_variant.metafields.custom.color.value
+                      assign color_meta = matched_variant.metafields.custom.color.value
+
+                      if color_meta.image
+                        assign color_image = color_meta.image
+                      endif
+
+                      if color_meta.color
+                        assign color_hex = color_meta.color
+                      endif
+                    endif
+
+                  %}
 
                   <span
                     class="variant-option__color-swatch"

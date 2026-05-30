@@ -1,11 +1,22 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
 <section
-  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style housedecor-gallery-grid"
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style housedecor-gallery-grid{% if section.settings.scroll_fade_in %} scroll-fade-in{% endif %}"
   style="
+
+    {% if section.settings.scroll_fade_in %}
+      --scroll-fade-duration: {{ section.settings.scroll_fade_duration | default: 900 }}ms;
+      --scroll-fade-delay: {{ section.settings.scroll_fade_delay | default: 0 }}ms;
+      --scroll-fade-offset: {{ section.settings.scroll_fade_offset | default: 20 }}px;
+    {% endif %}
     {% render 'spacing-style', settings: section.settings %}
     {% render 'border-override', settings: section.settings %}
   "
+
+  {% if section.settings.scroll_fade_in %}
+    data-scroll-fade
+    data-scroll-fade-direction="{{ section.settings.scroll_fade_direction | default: 'up' }}"
+  {% endif %}
   {% if request.visual_preview_mode %}
     data-shopify-visual-preview
   {% endif %}
@@ -429,8 +440,14 @@
       "id": "section_width",
       "label": "Section width",
       "options": [
-        { "value": "page-width", "label": "Page width" },
-        { "value": "full-width", "label": "Full width" }
+        {
+          "value": "page-width",
+          "label": "Page width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
       ],
       "default": "page-width"
     },
@@ -451,6 +468,78 @@
       "id": "description",
       "label": "Descripción",
       "default": "Cada detalle cuenta la historia de nuestro oficio"
+    },
+    {
+      "type": "header",
+      "content": "Animación al hacer scroll"
+    },
+    {
+      "type": "checkbox",
+      "id": "scroll_fade_in",
+      "label": "Activar fade-in al hacer scroll",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "scroll_fade_direction",
+      "label": "Dirección de aparición",
+      "options": [
+        {
+          "value": "up",
+          "label": "Desde abajo"
+        },
+        {
+          "value": "down",
+          "label": "Desde arriba"
+        },
+        {
+          "value": "left",
+          "label": "Desde la izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Desde la derecha"
+        },
+        {
+          "value": "none",
+          "label": "Solo opacidad"
+        }
+      ],
+      "default": "up",
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_duration",
+      "label": "Duración",
+      "min": 300,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 900,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_delay",
+      "label": "Retraso",
+      "min": 0,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 0,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
+    },
+    {
+      "type": "range",
+      "id": "scroll_fade_offset",
+      "label": "Distancia de desplazamiento",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20,
+      "visible_if": "{{ section.settings.scroll_fade_in }}"
     },
     {
       "type": "header",
@@ -496,12 +585,24 @@
       "name": "Galería imágenes",
       "category": "Custom",
       "blocks": [
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" },
-        { "type": "image" }
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
       ]
     }
   ]

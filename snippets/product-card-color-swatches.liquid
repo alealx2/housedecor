@@ -23,28 +23,48 @@
   {%- liquid
     assign color_count = color_option.values.size
     assign extra_colors_count = color_count | minus: swatch_limit
+    assign variant_option_key = 'option' | append: color_option.position
   -%}
 
   <div class="product-card-color-swatches" aria-label="Colores disponibles">
     {%- for product_option_value in color_option.values limit: swatch_limit -%}
       {%- liquid
         assign color_label = product_option_value.name | default: product_option_value
-        assign swatch = product_option_value.swatch
-        assign swatch_value = blank
+        assign swatch_bg = blank
+        assign swatch_img = blank
+        assign matched_variant = blank
 
-        if swatch.image
-          assign swatch_image_url = swatch.image | image_url: width: 80
-          assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
-        elsif swatch.color
-          assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
+        for variant in product_resource.variants
+          if variant[variant_option_key] == product_option_value
+            assign matched_variant = variant
+            break
+          endif
+        endfor
+
+        if matched_variant and matched_variant.metafields.custom.color.value
+          assign color_meta = matched_variant.metafields.custom.color.value
+
+          if color_meta.image != blank
+            assign swatch_img = color_meta.image
+          elsif color_meta.color != blank
+            assign swatch_bg = color_meta.color
+          endif
         endif
       -%}
 
       <span
-        class="product-card-color-swatches__item{% if swatch_value == blank %} product-card-color-swatches__item--empty{% endif %}"
+        class="product-card-color-swatches__item{% if swatch_bg == blank and swatch_img == blank %} product-card-color-swatches__item--empty{% endif %}"
         title="{{ color_label | escape }}"
         aria-label="{{ color_label | escape }}"
-        style="{% if swatch_value != blank %}--product-card-swatch-background: {{ swatch_value }};{% endif %}{% if swatch.image %} --product-card-swatch-focal-point: {{ swatch.image.presentation.focal_point }};{% endif %}"
+        style="
+          {% if swatch_img != blank %}
+            --product-card-swatch-background: url({{ swatch_img | image_url: width: 80 }});
+            --product-card-swatch-size: cover;
+            --product-card-swatch-position: center;
+          {% elsif swatch_bg != blank %}
+            --product-card-swatch-background: {{ swatch_bg }};
+          {% endif %}
+        "
       ></span>
     {%- endfor -%}
 
