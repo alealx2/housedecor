@@ -4,7 +4,9 @@ import { debounce, throttle, prefersReducedMotion } from '@theme/utilities';
  * Timeout duration (in milliseconds) after which scroll is considered to have ended.
  * @constant {number}
  */
+
 const SCROLL_END_TIMEOUT = 50;
+const DEFAULT_SCROLL_DURATION = 1700;
 
 /**
  * Class representing a Scroller that handles smooth scrolling and detects scroll end events.
@@ -156,10 +158,16 @@ export class Scroller {
 
     if (!instant) this.#setup();
 
-    this.element[method]({
-      [this.#edge.toLowerCase()]: value,
-      behavior: instant ? 'instant' : 'smooth',
-    });
+    if (instant) {
+      this.element[method]({
+        [this.#edge.toLowerCase()]: value,
+        behavior: 'instant',
+      });
+
+      return;
+    }
+
+    this.#animateScroll(method, value, options.duration || DEFAULT_SCROLL_DURATION);
   }
 
   /**
@@ -250,6 +258,38 @@ export class Scroller {
     },
     SCROLL_END_TIMEOUT
   );
+
+  /**
+   * 
+   * @param {*} method 
+   * @param {*} value 
+   * @param {*} duration 
+   */
+  #animateScroll(method, value, duration = DEFAULT_SCROLL_DURATION) {
+    const edge = this.#edge;
+    const property = `scroll${edge}`;
+    const target = method === 'scrollBy' ? this.element[property] + value : value;
+    const start = this.element[property];
+    const distance = target - start;
+    const startTime = performance.now();
+
+    const easeInOutCubic = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+
+      this.element[property] = start + distance * eased;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }
 
   /**
    * Sets the scroll snap behavior of the element.

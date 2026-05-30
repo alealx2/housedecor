@@ -220,7 +220,10 @@ export class Slideshow extends Component {
     slide.setAttribute('aria-hidden', 'false');
 
     if (this.#scroll) {
-      this.#scroll.to(slide, { instant });
+      this.#scroll.to(slide, {
+        instant,
+        duration: this.autoplayScrollDuration,
+      });
     }
 
     this.current = this.slides?.indexOf(slide) || 0;
@@ -376,6 +379,15 @@ export class Slideshow extends Component {
 
   get pauseOnHover() {
     return this.hasAttribute('pause-on-hover');
+  }
+
+  get autoplayScrollDuration() {
+    const duration = this.getAttribute('autoplay-scroll-duration');
+    const value = parseInt(`${duration}`, 10);
+
+    if (Number.isNaN(value) || value < 300) return 1200;
+
+    return value;
   }
 
   /**
